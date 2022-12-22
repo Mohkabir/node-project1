@@ -1,18 +1,18 @@
-exports.getBootcamps = (req, res, next) => {
+const Bootcamp = require("../model/Bootcamp");
 
-
- let boot = Array(9).fill({ id: "2", name: "boo1" });
-  res.status(200).json({
-    msg: "get all bootcamp",
-    bootcamps: [...boot],
-  });
-};
-exports.getBootcamp = (req, res, next) => {
-  res.status(200).json({ msg: `get bootcamp ${req.params.id}` });
+exports.getBootcamps = async (req, res, next) => {
+  const bootcamp = await Bootcamp.find();
+  res.status(200).json({ bootcamp });
 };
 
-exports.createBootcamp = (req, res, next) => {
-  res.status(200).json({ msg: "create bootcamp" });
+exports.getBootcamp = async (req, res, next) => {
+  const bootcamp = await Bootcamp.findById(req.params.id);
+  res.status(200).json({ bootcamp });
+};
+
+exports.createBootcamp = async (req, res, next) => {
+  const bootcamp = await Bootcamp.create(req.body);
+  res.status(201).json({ msg: "bootcamp created", bootcamp });
 };
 
 exports.updateBootcamp = (req, res, next) => {
